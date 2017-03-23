@@ -1,0 +1,35 @@
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<div id="app">
+  <input type="button" value="increase" v-on:click="increase(2, $event)" />
+
+  <p>{{counter}}</p>
+
+  <p v-on:mousemove="update"> {{x}} / {{y}} 
+      - <span v-on:mousemove.stop.prevent> DEAD SPOT - DO mousemove</span> </p>
+      <input type="text" v-on:keyup.space.enter="alertMe">
+</div>
+    
+<script>
+    new Vue({
+        el:'#app',
+        data: {
+            counter:0,
+            x:0,
+            y:0
+        },
+        methods:{
+            increase(step, event){
+                console.log(step)
+                console.log(event)
+            },
+            update(){
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            alertMe(){
+                console.log('----')
+            }
+        }
+    })
+</script>
