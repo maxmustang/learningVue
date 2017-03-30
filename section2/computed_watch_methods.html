@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <script src="vue.js"></script>
+    </head>
+    <body>
+
+        <div id="app">
+            <button v-on:click="counter++" >Increase</button>
+            <button v-on:click="counter--" >Decrease</button>
+            <button v-on:click="secondCounter++" >Increase Second counter</button>
+            <p>Counter {{ counter }} | second counter {{ secondCounter }}</p>
+            <p>Result {{ result() }} | Output {{ output }}</p>
+        </div>
+        <script>
+            new Vue({
+                el:'#app',
+                data: {
+                    counter: 0,
+                    secondCounter: 0
+                },
+                computed:{
+                    output:  function () {
+                        //veujs consegue identificar quando uma propriedade descrita no data
+                        //e quando ela mudar ele executa a funcao equivalente nos computeds
+
+                        //COMPUTED PROPERTIES SAO SINCRONAS
+                       console.log("computed")
+                        return this.counter > 4 ? 'greater than 5' : "Samller than 5"
+                    }
+                },
+                watch: {
+                    //Identifica quando uma propriedade muda, mas executa async
+                    //um codigo que executa, sempre que uma propriedade mudar
+                    counter: function(value){
+                        var vm = this
+                        setTimeout(function(){
+                            console.log("watch")
+                            vm.counter = 0;
+                        }, 2000)
+                    }
+                },
+                methods: { 
+                    //as funcoes em methods sao chamadas sempre que alguma propriedade mudar
+                    //como o vuejs nao tem como identificar qual propriedade mudou
+                    //ele sempre vai executar todas as funcoes descritas no methods
+                    result: function() {
+                        console.log("method")
+                        return this.counter > 4 ? 'greater than 5' : "Samller than 5"
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
